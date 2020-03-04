@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Security.Cryptography;
+using System.Numerics;
 
 namespace infbez2
 {
@@ -18,5 +20,11 @@ namespace infbez2
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());
         }
+    }
+
+
+    static public class var_global
+    {
+        static public List<BigInteger> simpleNumbersList;
     }
 }
