@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Security.Cryptography;
 using System.Numerics;
+using System.IO;
 
 namespace infbez2
 {
