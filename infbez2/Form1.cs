@@ -23,8 +23,13 @@ namespace infbez2
         // При загрузке формы
         private void Form1_Load(object sender, EventArgs e)
         {
-            var_global.simpleNumbersList = new List<BigInteger>();
-            Form1.generateSimpleNumbers(2147483645); // макс для Int32 = 2 147 483 647
+            var_global.simpleNumbersList = new List<BigInteger>() {2, 3, 5,7 ,11, 13, 17, 19, 23, 29 , 31, 37 , 41, 43, 47, 53,
+                                                                   59, 61, 67, 71, 73, 79, 83, 89, 97, 101, 103, 107, 109, 113,
+                                                                   127, 131, 137, 139, 149, 151, 163,167, 173, 179, 181, 191, 193,
+                                                                   197, 199, 211, 223, 227, 229, 233, 239, 241, 251, 257, 263, 269,
+                                                                   271, 277, 281, 283, 293, 307, 311, 313, 317, 331, 337, 347, 349, 353};
+            
+            Form1.generateSimpleNumbers(2147483647); // макс для Int32 = 2 147 483 647
 
         }
 
@@ -32,28 +37,29 @@ namespace infbez2
         // Проверка числа на простоту методом пробных делений и решета эратосфена
         static public void generateSimpleNumbers(BigInteger n)
         {
+            //BigInteger n_sqrt = 10000 * (BigInteger)Math.Sqrt((Double) n);
+            BigInteger n_sqrt = 1500000;
 
-            var_global.simpleNumbersList.Clear();
 
+            //var_global.simpleNumbersList.Clear();
+
+            BigInteger simpleCount = 0;
+            bool flag;
+            BigInteger start = var_global.simpleNumbersList.Max() + 1;
             // Заполнили список числами от 2 до корня из n
-            for (Int32 i = 2; i <= n; i++)
+            for (BigInteger i = start; i < n_sqrt; i++)
             {
-                var_global.simpleNumbersList.Add(i);
-            }
-
-            // Оставили в списке только простые числа от 2 до корня из n
-            for (Int32 i = 0; i < var_global.simpleNumbersList.Count; i++)
-            {
-                for (Int32 k = i + 1; k < var_global.simpleNumbersList.Count; k++)
-                {
-                    if (var_global.simpleNumbersList[k] % var_global.simpleNumbersList[i] == 0)
+                simpleCount = var_global.simpleNumbersList.Count;
+                flag = true;
+                for (int k = 0; flag == true && k < simpleCount; k++)
+                    if(i % var_global.simpleNumbersList[k] == 0) 
                     {
-                        var_global.simpleNumbersList.RemoveAt(k);
-                        k--;
+                        flag = false;
                     }
-                }
+                    
+                if (flag == true)
+                    var_global.simpleNumbersList.Add(i);
             }
-
         }
     }
 }
