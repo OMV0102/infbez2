@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using System.Security.Cryptography;
 using System.Numerics;
 using System.IO;
+using System.Text;
 
 namespace infbez2
 {
@@ -23,9 +24,146 @@ namespace infbez2
         }
     }
 
-
-    static public class var_global
+    public static class alg // Основной класс с методами
     {
-        static public List<BigInteger> simpleNumbersList;
+        // Генерация простых чисел до n надежным перебором
+        static public void generateSimpleNumbers(BigInteger n)
+        {
+            //var_global.simpleNumbersList.Clear();
+
+            BigInteger simpleCount = 0;
+            bool flag;
+            Int32 start = 2;
+            if (global.simpleNumbersList.Count() > 1)
+                start = global.simpleNumbersList.Max() + 1;
+
+            // Заполнили список числами от 2 до корня из n
+            for (Int32 i = start; i < n; i++)
+            {
+                simpleCount = global.simpleNumbersList.Count;
+                flag = true;
+                for (int k = 0; flag == true && k < simpleCount; k++)
+                    if (i % global.simpleNumbersList[k] == 0)
+                    {
+                        flag = false;
+                    }
+
+                if (flag == true)
+                    global.simpleNumbersList.Add(i);
+            }
+        }
+
+        // сохранение простых чисел в файл из списка
+        public static void saveSimpleNumber(String filename)
+        {
+            String fullPath = Application.StartupPath + "\\" + filename;
+            int N = global.simpleNumbersList.Count();
+            StreamWriter sw = new StreamWriter(fullPath, false, Encoding.UTF8);
+
+            for (int i = 0; i < N; i++)
+                sw.WriteLine(global.simpleNumbersList[i]);
+
+            sw.Close();
+        }
+
+        // загрузка уже найденных простых чисел из файла в список
+        public static void loadSimpleNumber(String filename)
+        {
+            String fullPath = Application.StartupPath + "\\" + filename;
+            if (File.Exists(fullPath) == true)
+            {
+
+                int N = global.simpleNumbersList.Count();
+                StreamReader sr = new StreamReader(fullPath, Encoding.UTF8);
+                String str = "";
+                Int32 num = 0;
+                while (sr.EndOfStream == false)
+                {
+                    str = sr.ReadLine();
+                    if (Int32.TryParse(str, out num) == true)
+                        global.simpleNumbersList.Add(num);
+                }
+
+                sr.Close();
+            }
+        }
+
+        public static String RSA_algorithm(int m) 
+        {
+            String result_str = "";
+
+            Int64 p, q; // 2 различных больших простых числа
+            Int64 N; // Число N = p*q 
+            Int64 f_n; // значение ф(N) функции Эйлера
+            Int64 k = 0; // Степень k случайно выбираемая на 2 шаге
+            Int64 u0; // случайное стартовое значение
+            BigInteger ui = 0, u_prev = 0; //текущее значение и предыдущее сгенерированное
+            Int32 min = 1000000, max = global.simpleNumbersList[global.simpleNumbersList.Count-1]; // Границы генерации числа
+            Random rnd = new Random((Int32)DateTime.Now.Ticks); // Инициализая объекта ГПСЧ
+
+            // ШАГ 1 - Сгенировали случайные числа
+            p = rnd.Next(min , max);
+            q = rnd.Next(min, max);
+            N = p * q;
+            f_n = (p - 1) * (q - 1);
+
+            // ШАГ 2 - Выбор случайного числа k взаимно простого с ф(N)
+            //         Взаимно простое, то есть нет общих делителей у k и ф(N)
+            //         Лучше выбирать k сразу простым числом (у простого всего 2 делителя)
+            do
+            {
+                int index = 0;
+                // 
+                if (global.simpleNumbersList[global.simpleNumbersList.Count - 1] <= f_n)
+                    index = global.simpleNumbersList.Count - 1;
+                else
+                    index = alg.getIndexFromList(f_n) - 1;
+
+                k = global.simpleNumbersList[rnd.Next(0, index)];
+
+            } while (alg.GCD(k, f_n) != 1); // Выбираем k, пока НОД не == 1
+
+            // ШАГ 3 - Выбор случайного стартового u0 от 1 до N-1
+
+
+            return result_str;
+        }
+
+        // Поиск НОД двух чисел
+        static public Int64 GCD(Int64 a, Int64 b)
+        {
+            while (b != 0)
+            {
+                Int64 t = b;
+                b = a % b;
+                a = t;
+            }
+            return a;
+        }
+
+        // Индекс по элементу в списке простых чисел или ближайший индекс сверху
+        public static int getIndexFromList(Int64 num)
+        {
+            int start = 0;
+            int end = global.simpleNumbersList.Count;
+
+            while (start < end)
+            {
+                int half = (end + start) / 2;
+                if (global.simpleNumbersList[half] == num) return half;
+                if (global.simpleNumbersList[half] < num) start = half + 1;
+                else end = half - 1;
+            }
+            while (start < global.simpleNumbersList.Count)
+                if (global.simpleNumbersList[start] > num) return start;
+                else start++;
+            return -1;
+        }
+    }
+
+
+    static public class global
+    {
+        static public List<Int32> simpleNumbersList;
     }
 }
