@@ -99,12 +99,12 @@ namespace infbez2
             Int32 k = 0; // Степень k случайно выбираемая на 2 шаге
             BigInteger u0 =0 ; // случайное стартовое значение
             BigInteger ui = 0, u_prev = 0; //текущее значение и предыдущее сгенерированное
-            Int32 min = 1000000, max = global.simpleNumbersList[global.simpleNumbersList.Count-1]; // Границы генерации числа
+            Int32 min = 78500, max = global.simpleNumbersList.Count; // ИНДЕКСЫ границ генерации числа
             global.rng = new RNGCryptoServiceProvider(); // Выделили память под генератор случайных чисел
-            
+            p = 0;
             // ШАГ 1 - Сгенировали случайные числа
-            p = alg.random_PRNG(min , max);
-            q = alg.random_PRNG(min, max);
+            p = global.simpleNumbersList[(Int32)alg.PRNG(min, max)];
+            q = global.simpleNumbersList[(Int32)alg.PRNG(min, max)];
             N = p * q;
             f_n = (p - 1) * (q - 1);
 
@@ -121,32 +121,28 @@ namespace infbez2
                 else
                     max_index = alg.getIndexFromList(f_n) - 1; // иначе простое число меньшее значения функции Эйлера
 
-                index = Convert.ToInt32(alg.random_PRNG(0, max_index));
+                index = Convert.ToInt32(alg.PRNG(0, max_index));
                 k = global.simpleNumbersList[index];
 
             } while (alg.GCD(k, f_n) != 1); // Ищем k, пока НОД не = 1
 
             // ШАГ 3 - Выбор случайного стартового u0 от 1 до N-1
-            u0 = alg.random_PRNG(2, N-1);
+            u0 = alg.PRNG(2, N-1);
 
             // ШАГ 4 Формирование бит последовательности
             string temp = "";
 
             u_prev = u0;  //для 0 итерации 
 
-            for(int i = 0; i < m; i++) // цикл генерации
+            for(int i = 0; i < m; i++) // Цикл генерации
             {
                 ui = BigInteger.ModPow(u_prev, k, N); // (u_prev^k) mod N
 
-                byte[] ui_byte = ui.ToByteArray();
-                temp = string.Concat(ui_byte.Select(b => Convert.ToString(b, 2).PadLeft(8, '0')).Reverse());
+                // Перевели ui в биты
+                temp = string.Concat(ui.ToByteArray().Select(b => Convert.ToString(b, 2).PadLeft(8, '0')).Reverse());
+                result_str += temp[temp.Length-1];  // Запомнили младший бит
 
-                result_str += temp[temp.Length-1];
-                u_prev = ui;
-
-                #region
-                
-                #endregion
+                u_prev = ui; // u[i] становиться u[i-1]
             }
 
             global.rng.Dispose(); // Освободили память от ГПСЧ
@@ -157,7 +153,7 @@ namespace infbez2
         //       min включается в промежуток, max НЕ включается
         //       Использовать ТОЛЬКО , если выделена память для global.rng
         //       min обязательно меньше max
-        public static Int64 random_PRNG(Int64 min, Int64 max)
+        public static Int64 PRNG(Int64 min, Int64 max)
         {
             Int64 result = 0;
             if (global.rng != null || min < max)
