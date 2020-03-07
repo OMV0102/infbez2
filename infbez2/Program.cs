@@ -71,16 +71,16 @@ namespace infbez2
         public static void loadSimpleNumber(String filename)
         {
             String fullPath = Application.StartupPath + "\\" + filename;
-            if (File.Exists(fullPath) == true)
+            if (File.Exists(fullPath) == true) // Если фай по пути существует
             {
-
-                int N = global.simpleNumbersList.Count();
+                // Создали поток для считывания
                 StreamReader sr = new StreamReader(fullPath, Encoding.UTF8);
                 String str = "";
                 Int32 num = 0;
-                while (sr.EndOfStream == false)
+                while (sr.EndOfStream == false) // Считываем пока поток не пуст
                 {
-                    str = sr.ReadLine();
+                    str = sr.ReadLine(); //Считали строку с числом
+                    // Преобразовали из строки в число
                     if (Int32.TryParse(str, out num) == true)
                         global.simpleNumbersList.Add(num);
                 }
@@ -89,6 +89,7 @@ namespace infbez2
             }
         }
 
+        // RSA алгоритм генерирует последовательность битов заданной длиной m
         public static String RSA_algorithm(int m) 
         {
             String result_str = "";
@@ -121,12 +122,12 @@ namespace infbez2
                 else
                     max_index = alg.getIndexFromList(f_n) - 1; // иначе простое число меньшее значения функции Эйлера
 
-                index = Convert.ToInt32(alg.PRNG(0, max_index));
-                k = global.simpleNumbersList[index];
+                index = Convert.ToInt32(alg.PRNG(0, max_index)); // Сгенерировали случайно индекс
+                k = global.simpleNumbersList[index]; // По индексу выбрали простое число для k
 
             } while (alg.GCD(k, f_n) != 1); // Ищем k, пока НОД не = 1
 
-            // ШАГ 3 - Выбор случайного стартового u0 от 1 до N-1
+            // ШАГ 3 - Выбор случайного стартового 1 < u0 < N-1
             u0 = alg.PRNG(2, N-1);
 
             // ШАГ 4 Формирование бит последовательности
@@ -149,6 +150,38 @@ namespace infbez2
             return result_str; // Строка с генерированной последовательностью длиной m
         }
 
+        // Частотный тест сгенерированной последовательности
+        // проверяет, что последовательность является случайной
+        // Возвращает true, если тест пройден, иначе false
+        public static bool test_frequency(String sequence)
+        {
+            bool result = false; // результат теста
+            Int32 n = sequence.Length; // длина последовательности
+            Int32 Sn = 0; // сумма элементов последовательности
+            double S = 0.0;
+
+            // Складываем элементы последовательности
+            for(int i = 0; i < n; i++)
+            {
+                if(sequence[i] == '1') // Если единица - прибавляем
+                {
+                    Sn += 1;
+                }
+                else if (sequence[i] == '0') // Если ноль - отнимаем
+                {
+                    Sn -= 1;
+                }
+            }
+
+            S = Math.Abs(Sn) / Math.Sqrt(n); // посчитали статистику S
+
+            if (S <= 1.82138636) // Если статистика S меньше границы
+                result = true; // Тест пройден
+
+
+            return result;
+        }
+
         // Генератор случайного числа
         //       min включается в промежуток, max НЕ включается
         //       Использовать ТОЛЬКО , если выделена память для global.rng
@@ -158,18 +191,18 @@ namespace infbez2
             Int64 result = 0;
             if (global.rng != null || min < max)
             {
-                byte[] b = new byte[7];
-                global.rng.GetBytes(b);
-                BitArray bits = new BitArray(b);
-                result = alg.binToDec(bits) % (max - min) + min;
+                byte[] b = new byte[7]; // Место под 7 байт числа
+                global.rng.GetBytes(b); // Сгенерировали случайны байты
+                BitArray bits = new BitArray(b); // Байты в биты
+                result = alg.binToDec(bits); // Из битов в число 
+                result = result % (max - min) + min; // Сделади число в нужном промежутке
                 
             }
-
             return result;
         }
 
         // перевод из двоичного числа (биты) в число десятичное 
-        // нужно для генератора числа
+        // Используется в PRNG
         public static Int64 binToDec(BitArray bits_in)
         {
             BitArray b = new BitArray(bits_in);
@@ -186,6 +219,7 @@ namespace infbez2
         }
 
         // Поиск НОД двух чисел
+        // Используется в 2 шаге алгоритма RSA
         static public Int64 GCD(Int64 a, Int64 b)
         {
             while (b != 0)
@@ -198,6 +232,7 @@ namespace infbez2
         }
 
         // Бинарный поиск, индекс по элементу в списке простых чисел или ближайший индекс сверху
+        // Используется в 2 шаге алгоритма RSA
         public static int getIndexFromList(Int64 num)
         {
             int start = 0;
@@ -220,7 +255,7 @@ namespace infbez2
 
     static public class global
     {
-        static public List<Int32> simpleNumbersList;
-        static public RNGCryptoServiceProvider rng;
+        static public List<Int32> simpleNumbersList; // Список с простыми числами
+        static public RNGCryptoServiceProvider rng; // объект класса генератора псевдослучайных чисел
     }
 }
