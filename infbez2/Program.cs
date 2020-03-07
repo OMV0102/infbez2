@@ -96,15 +96,15 @@ namespace infbez2
             Int64 p, q; // 2 различных больших простых числа
             Int64 N; // Число N = p*q 
             Int64 f_n; // значение ф(N) функции Эйлера
-            Int64 k = 0; // Степень k случайно выбираемая на 2 шаге
-            Int64 u0; // случайное стартовое значение
+            Int32 k = 0; // Степень k случайно выбираемая на 2 шаге
+            BigInteger u0 =0 ; // случайное стартовое значение
             BigInteger ui = 0, u_prev = 0; //текущее значение и предыдущее сгенерированное
             Int32 min = 1000000, max = global.simpleNumbersList[global.simpleNumbersList.Count-1]; // Границы генерации числа
-            Random rnd = new Random((Int32)DateTime.Now.Ticks); // Инициализая объекта ГПСЧ
-
+            global.rng = new RNGCryptoServiceProvider(); // Выделили память под генератор случайных чисел
+            
             // ШАГ 1 - Сгенировали случайные числа
-            p = rnd.Next(min , max);
-            q = rnd.Next(min, max);
+            p = alg.random_PRNG(min , max);
+            q = alg.random_PRNG(min, max);
             N = p * q;
             f_n = (p - 1) * (q - 1);
 
@@ -113,30 +113,67 @@ namespace infbez2
             //         Лучше выбирать k сразу простым числом (у простого всего 2 делителя)
             do
             {
-                int index = 0;
-                // 
+                int max_index = 0;
+                int index;
+                // Если значение функции эйлера больше или равно, чем последний эл. списка с простыми числами
                 if (global.simpleNumbersList[global.simpleNumbersList.Count - 1] <= f_n)
-                    index = global.simpleNumbersList.Count - 1;
+                    max_index = global.simpleNumbersList.Count - 1; // то макс и будет последний элемент
                 else
-                    index = alg.getIndexFromList(f_n) - 1;
+                    max_index = alg.getIndexFromList(f_n) - 1; // иначе простое число меньшее значения функции Эйлера
 
-                k = global.simpleNumbersList[rnd.Next(0, index)];
+                index = Convert.ToInt32(alg.random_PRNG(0, max_index));
+                k = global.simpleNumbersList[index];
 
-            } while (alg.GCD(k, f_n) != 1); // Выбираем k, пока НОД не == 1
+            } while (alg.GCD(k, f_n) != 1); // Ищем k, пока НОД не = 1
 
             // ШАГ 3 - Выбор случайного стартового u0 от 1 до N-1
-            RNGCryptoServiceProvider rng = new RNGCryptoServiceProvider();
-            byte[] b = new byte[7];
-            rng.GetBytes(b);
-            BitArray bits = new BitArray(b);
-            Int64 s = alg.binToDec(bits);
+            u0 = alg.random_PRNG(2, N-1);
 
+            // ШАГ 4 Формирование бит последовательности
+            string temp = "";
 
-            rng.Dispose();
-            return result_str;
+            u_prev = u0;  //для 0 итерации 
+
+            for(int i = 0; i < m; i++) // цикл генерации
+            {
+                ui = BigInteger.ModPow(u_prev, k, N); // (u_prev^k) mod N
+
+                byte[] ui_byte = ui.ToByteArray();
+                temp = string.Concat(ui_byte.Select(b => Convert.ToString(b, 2).PadLeft(8, '0')).Reverse());
+
+                result_str += temp[temp.Length-1];
+                u_prev = ui;
+
+                #region
+                
+                #endregion
+            }
+
+            global.rng.Dispose(); // Освободили память от ГПСЧ
+            return result_str; // Строка с генерированной последовательностью длиной m
         }
 
-        // перевод из двоичного числа (строки) в число десятичное
+        // Генератор случайного числа
+        //       min включается в промежуток, max НЕ включается
+        //       Использовать ТОЛЬКО , если выделена память для global.rng
+        //       min обязательно меньше max
+        public static Int64 random_PRNG(Int64 min, Int64 max)
+        {
+            Int64 result = 0;
+            if (global.rng != null || min < max)
+            {
+                byte[] b = new byte[7];
+                global.rng.GetBytes(b);
+                BitArray bits = new BitArray(b);
+                result = alg.binToDec(bits) % (max - min) + min;
+                
+            }
+
+            return result;
+        }
+
+        // перевод из двоичного числа (биты) в число десятичное 
+        // нужно для генератора числа
         public static Int64 binToDec(BitArray bits_in)
         {
             BitArray b = new BitArray(bits_in);
@@ -188,5 +225,6 @@ namespace infbez2
     static public class global
     {
         static public List<Int32> simpleNumbersList;
+        static public RNGCryptoServiceProvider rng;
     }
 }

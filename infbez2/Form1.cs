@@ -33,7 +33,7 @@ namespace infbez2
             alg.loadSimpleNumber("prime_numbers.txt");
             //alg.generateSimpleNumbers(8000000); // макс для Int32 = 2 147 483 647
             //alg.saveSimpleNumber("prime_numbers2.txt");
-            alg.RSA_algorithm(1);
+            alg.RSA_algorithm(1000);
             
         }
     }
