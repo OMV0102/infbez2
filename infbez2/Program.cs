@@ -7,6 +7,7 @@ using System.Security.Cryptography;
 using System.Numerics;
 using System.IO;
 using System.Text;
+using System.Collections;
 
 namespace infbez2
 {
@@ -124,9 +125,31 @@ namespace infbez2
             } while (alg.GCD(k, f_n) != 1); // Выбираем k, пока НОД не == 1
 
             // ШАГ 3 - Выбор случайного стартового u0 от 1 до N-1
+            RNGCryptoServiceProvider rng = new RNGCryptoServiceProvider();
+            byte[] b = new byte[7];
+            rng.GetBytes(b);
+            BitArray bits = new BitArray(b);
+            Int64 s = alg.binToDec(bits);
 
 
+            rng.Dispose();
             return result_str;
+        }
+
+        // перевод из двоичного числа (строки) в число десятичное
+        public static Int64 binToDec(BitArray bits_in)
+        {
+            BitArray b = new BitArray(bits_in);
+            Int64 result = 0;
+            int N = b.Length;
+            for (int i = N - 1; i >= 0; i--)
+            {
+                if (b[i] == true)
+                {
+                    result += Convert.ToInt64(Math.Pow(2, N - 1 - i));
+                }
+            }
+            return result;
         }
 
         // Поиск НОД двух чисел
@@ -141,7 +164,7 @@ namespace infbez2
             return a;
         }
 
-        // Индекс по элементу в списке простых чисел или ближайший индекс сверху
+        // Бинарный поиск, индекс по элементу в списке простых чисел или ближайший индекс сверху
         public static int getIndexFromList(Int64 num)
         {
             int start = 0;

@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using System.Security.Cryptography;
 using System.Numerics;
 using System.IO;
+using System.Collections;
 
 
 namespace infbez2
