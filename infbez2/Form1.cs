@@ -34,6 +34,7 @@ namespace infbez2
             String str =  alg.RSA_algorithm(10000);
             bool test1 = alg.test_frequency(str);
             bool test2 = alg.test_SameBits(str);
+            bool test3 = alg.test_arbitrary_deviations(str);
 
             
         }
