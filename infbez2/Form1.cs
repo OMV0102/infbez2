@@ -33,6 +33,7 @@ namespace infbez2
         {
             String str =  alg.RSA_algorithm(10000);
             bool test1 = alg.test_frequency(str);
+            bool test2 = alg.test_SameBits(str);
 
             
         }
