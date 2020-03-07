@@ -90,7 +90,7 @@ namespace infbez2
         }
 
         // RSA алгоритм генерирует последовательность битов заданной длиной m
-        public static String RSA_algorithm(int m) 
+        public static String RSA_algorithm(Int32 m) 
         {
             String result_str = "";
 
@@ -153,7 +153,7 @@ namespace infbez2
         // Частотный тест сгенерированной последовательности
         // проверяет, что последовательность равномерно распределенная
         // Возвращает true, если тест пройден, иначе false
-        public static bool test_frequency(String sequence)
+        public static bool test1_frequency(String sequence)
         {
             bool result = false; // результат теста
             Int32 n = sequence.Length; // длина последовательности
@@ -181,7 +181,7 @@ namespace infbez2
             if (S <= global.a) // Если статистика S меньше уровня значимости
                 result = true; // Тест пройден
 
-
+            global.test1_S = S;
             return result;
         }
 
@@ -189,7 +189,7 @@ namespace infbez2
         //    проверяет, является ли кол-во цепочек 0 и 1 разной длины
         //    примерно приближенна к кол-ву в истинно случайной послед.
         // Возвращает true, если тест пройден, иначе false
-        public static bool test_SameBits(String sequence)
+        public static bool test2_SameBits(String sequence)
         {
             bool result = false; // результат теста
             Int32 n = sequence.Length; // длина последовательности
@@ -225,6 +225,7 @@ namespace infbez2
             if (S <= global.a) // Если статистика S меньше уровня значимости
                 result = true; // Тест пройден
 
+            global.test2_S = S;
             return result;
         }
 
@@ -232,7 +233,7 @@ namespace infbez2
         //    определяет отклонения от ожидаемого числа посещений
         //    различных состояний при произвольном обходе
         // Возвращает true, если тест пройден, иначе false
-        public static bool test_arbitrary_deviations(String sequence)
+        public static bool test3_arbitrary_deviations(String sequence)
         {
             bool result = false; // результат теста
             Int32 n = sequence.Length; // длина последовательности
@@ -315,8 +316,8 @@ namespace infbez2
             }
 
             // ШАГ 7
-            // Проверяем, что все 19шт статистик Yj меньше уровня значимости
-            // Если хоть одна не меньше, тест не пройден
+            // Проверяем, что все 18шт статистик Yj меньше/равны уровня значимости
+            // Если хоть одна больше, тест не пройден
             result = true;
             for(int i = 0; result == true && i < 18; i++)
             {
@@ -403,5 +404,12 @@ namespace infbez2
         static public List<Int32> simpleNumbersList; // Список с простыми числами
         static public RNGCryptoServiceProvider rng; // объект класса генератора псевдослучайных чисел
         static public double a = 1.82138636; // допустимый уровень значимости в тесте
+        static public String sequence; // Сгенерированная последовательность бит
+        static public bool test1; // Результат выполнения 1 теста
+        static public bool test2; // Результат выполнения 2 теста
+        static public bool test3; // Результат выполнения 3 теста
+        static public double test1_S; // Значение статистики S в 1 тесте
+        static public double test2_S; // Значение статистики S в 2 тесте
+        static public double test3_S; // Значение статистики S в 3 тесте
     }
 }

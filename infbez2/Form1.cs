@@ -25,18 +25,47 @@ namespace infbez2
         // При загрузке формы
         private void Form1_Load(object sender, EventArgs e)
         {
+            // Выделили память под список простых чисел
             global.simpleNumbersList = new List<Int32>();
+            // Считали простые числа с файла
             alg.loadSimpleNumber("prime_numbers.txt");
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void btn_generate_Click(object sender, EventArgs e)
         {
-            String str =  alg.RSA_algorithm(100000);
-            bool test1 = alg.test_frequency(str);
-            bool test2 = alg.test_SameBits(str);
-            bool test3 = alg.test_arbitrary_deviations(str);
+            // Ждущий курсор и неактивное окно на время генерации
+            this.Cursor = Cursors.WaitCursor;
+            this.Enabled = false;
 
+            global.sequence =  alg.RSA_algorithm((Int32)this.txt_seqLength.Value);
+            txt_sequence.Text = global.sequence;
+            if (autotest.Checked == true)
+            {
+                btn_test_Click(null, null);
+            }
+
+            // Обычный курсор
+            this.Enabled = true;
+            this.Cursor = Cursors.Arrow; ;
             
+        }
+
+        private void autotest_CheckedChanged(object sender, EventArgs e)
+        {
+            if(autotest.Checked == true)
+            {
+                btn_test_Click(null, null);
+            }
+        }
+
+        private void btn_test_Click(object sender, EventArgs e)
+        {
+            if (global.sequence.Length >= txt_seqLength.Value)
+            {
+                global.test1 = alg.test1_frequency(global.sequence);
+                global.test2 = alg.test2_SameBits(global.sequence);
+                global.test3 = alg.test3_arbitrary_deviations(global.sequence);
+            }
         }
     }
 }
