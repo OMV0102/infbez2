@@ -33,17 +33,22 @@
             this.autotest = new System.Windows.Forms.CheckBox();
             this.txt_sequence = new System.Windows.Forms.RichTextBox();
             this.btn_test = new System.Windows.Forms.Button();
+            this.btn_copy_in_buffer = new System.Windows.Forms.Button();
+            this.label_test1_result = new System.Windows.Forms.Label();
+            this.label_test2_result = new System.Windows.Forms.Label();
+            this.label_test3_result = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.txt_seqLength)).BeginInit();
             this.SuspendLayout();
             // 
             // btn_generate
             // 
             this.btn_generate.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btn_generate.FlatAppearance.BorderSize = 2;
             this.btn_generate.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btn_generate.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.btn_generate.Location = new System.Drawing.Point(309, 80);
             this.btn_generate.Name = "btn_generate";
-            this.btn_generate.Size = new System.Drawing.Size(167, 43);
+            this.btn_generate.Size = new System.Drawing.Size(208, 70);
             this.btn_generate.TabIndex = 0;
             this.btn_generate.TabStop = false;
             this.btn_generate.Text = "Генерировать";
@@ -91,20 +96,21 @@
             this.autotest.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.autotest.Location = new System.Drawing.Point(523, 88);
             this.autotest.Name = "autotest";
-            this.autotest.Size = new System.Drawing.Size(128, 29);
+            this.autotest.Size = new System.Drawing.Size(260, 29);
             this.autotest.TabIndex = 2;
             this.autotest.TabStop = false;
-            this.autotest.Text = "Авто-тест";
+            this.autotest.Text = "Автопроверка тестами";
             this.autotest.UseVisualStyleBackColor = true;
             this.autotest.CheckedChanged += new System.EventHandler(this.autotest_CheckedChanged);
             // 
             // txt_sequence
             // 
-            this.txt_sequence.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.txt_sequence.DetectUrls = false;
+            this.txt_sequence.Font = new System.Drawing.Font("Consolas", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.txt_sequence.Location = new System.Drawing.Point(81, 168);
             this.txt_sequence.Name = "txt_sequence";
             this.txt_sequence.ReadOnly = true;
-            this.txt_sequence.Size = new System.Drawing.Size(782, 258);
+            this.txt_sequence.Size = new System.Drawing.Size(614, 258);
             this.txt_sequence.TabIndex = 3;
             this.txt_sequence.TabStop = false;
             this.txt_sequence.Text = "";
@@ -112,6 +118,7 @@
             // btn_test
             // 
             this.btn_test.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btn_test.FlatAppearance.BorderSize = 2;
             this.btn_test.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btn_test.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.btn_test.Location = new System.Drawing.Point(65, 105);
@@ -123,6 +130,51 @@
             this.btn_test.UseVisualStyleBackColor = true;
             this.btn_test.Click += new System.EventHandler(this.btn_test_Click);
             // 
+            // btn_copy_in_buffer
+            // 
+            this.btn_copy_in_buffer.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btn_copy_in_buffer.FlatAppearance.BorderSize = 2;
+            this.btn_copy_in_buffer.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_copy_in_buffer.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btn_copy_in_buffer.Location = new System.Drawing.Point(701, 391);
+            this.btn_copy_in_buffer.Name = "btn_copy_in_buffer";
+            this.btn_copy_in_buffer.Size = new System.Drawing.Size(71, 35);
+            this.btn_copy_in_buffer.TabIndex = 5;
+            this.btn_copy_in_buffer.TabStop = false;
+            this.btn_copy_in_buffer.Text = "Copy";
+            this.btn_copy_in_buffer.UseVisualStyleBackColor = true;
+            this.btn_copy_in_buffer.Click += new System.EventHandler(this.btn_copy_in_buffer_Click);
+            // 
+            // label_test1_result
+            // 
+            this.label_test1_result.AutoSize = true;
+            this.label_test1_result.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label_test1_result.Location = new System.Drawing.Point(759, 186);
+            this.label_test1_result.Name = "label_test1_result";
+            this.label_test1_result.Size = new System.Drawing.Size(141, 24);
+            this.label_test1_result.TabIndex = 6;
+            this.label_test1_result.Text = "Не результата";
+            // 
+            // label_test2_result
+            // 
+            this.label_test2_result.AutoSize = true;
+            this.label_test2_result.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label_test2_result.Location = new System.Drawing.Point(780, 230);
+            this.label_test2_result.Name = "label_test2_result";
+            this.label_test2_result.Size = new System.Drawing.Size(141, 24);
+            this.label_test2_result.TabIndex = 7;
+            this.label_test2_result.Text = "Не результата";
+            // 
+            // label_test3_result
+            // 
+            this.label_test3_result.AutoSize = true;
+            this.label_test3_result.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label_test3_result.Location = new System.Drawing.Point(808, 278);
+            this.label_test3_result.Name = "label_test3_result";
+            this.label_test3_result.Size = new System.Drawing.Size(141, 24);
+            this.label_test3_result.TabIndex = 8;
+            this.label_test3_result.Text = "Не результата";
+            // 
             // Form1
             // 
             this.AcceptButton = this.btn_generate;
@@ -130,6 +182,10 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveBorder;
             this.ClientSize = new System.Drawing.Size(924, 512);
+            this.Controls.Add(this.label_test3_result);
+            this.Controls.Add(this.label_test2_result);
+            this.Controls.Add(this.label_test1_result);
+            this.Controls.Add(this.btn_copy_in_buffer);
             this.Controls.Add(this.btn_test);
             this.Controls.Add(this.txt_sequence);
             this.Controls.Add(this.autotest);
@@ -156,6 +212,10 @@
         private System.Windows.Forms.CheckBox autotest;
         private System.Windows.Forms.RichTextBox txt_sequence;
         private System.Windows.Forms.Button btn_test;
+        private System.Windows.Forms.Button btn_copy_in_buffer;
+        private System.Windows.Forms.Label label_test1_result;
+        private System.Windows.Forms.Label label_test2_result;
+        private System.Windows.Forms.Label label_test3_result;
     }
 }
 

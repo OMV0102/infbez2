@@ -31,9 +31,11 @@ namespace infbez2
             alg.loadSimpleNumber("prime_numbers.txt");
         }
 
+        // кнопка ГЕНЕРИРОВАТЬ
         private void btn_generate_Click(object sender, EventArgs e)
         {
             // Ждущий курсор и неактивное окно на время генерации
+            this.txt_sequence.Text = "";
             this.Cursor = Cursors.WaitCursor;
             this.Enabled = false;
 
@@ -50,6 +52,7 @@ namespace infbez2
             
         }
 
+        // галочка автопроверка тестами
         private void autotest_CheckedChanged(object sender, EventArgs e)
         {
             if(autotest.Checked == true)
@@ -58,14 +61,30 @@ namespace infbez2
             }
         }
 
+        // кнопка ПРОВЕРИТЬ ТЕСТАМИ
         private void btn_test_Click(object sender, EventArgs e)
         {
-            if (global.sequence.Length >= txt_seqLength.Value)
+            // Если последовательность не пустая и длина не меньше минимальной
+            if (global.sequence.Length >= txt_seqLength.Minimum)
             {
                 global.test1 = alg.test1_frequency(global.sequence);
                 global.test2 = alg.test2_SameBits(global.sequence);
                 global.test3 = alg.test3_arbitrary_deviations(global.sequence);
+                test_result_show(); // показать результаты тестов
             }
+        }
+
+        // Копировать последовательность в буфер обмена
+        private void btn_copy_in_buffer_Click(object sender, EventArgs e)
+        {
+            if(txt_sequence.Text.Length >= txt_seqLength.Minimum)
+                Clipboard.SetText(txt_sequence.Text);
+        }
+
+        // функция: отобразить результаты тестов
+        private void test_result_show()
+        {
+
         }
     }
 }
