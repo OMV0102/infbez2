@@ -404,7 +404,7 @@ namespace infbez2
         static public List<Int32> simpleNumbersList; // Список с простыми числами
         static public RNGCryptoServiceProvider rng; // объект класса генератора псевдослучайных чисел
         static public double a = 1.82138636; // допустимый уровень значимости в тесте
-        static public String sequence; // Сгенерированная последовательность бит
+        static public String sequence = ""; // Сгенерированная последовательность бит
 
         static public bool test1; // Результат выполнения 1 теста
         static public bool test2; // Результат выполнения 2 теста

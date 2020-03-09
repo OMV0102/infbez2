@@ -58,7 +58,14 @@ namespace infbez2
         {
             if(autotest.Checked == true)
             {
+                btn_test.BackColor = Color.FromName("ControlDark");
+                btn_test.Enabled = false;
                 btn_test_Click(null, null);
+            }
+            else
+            {
+                btn_test.BackColor = Color.FromName("ActiveCaption");
+                btn_test.Enabled = true;
             }
         }
 
