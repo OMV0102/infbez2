@@ -29,6 +29,8 @@ namespace infbez2
             global.simpleNumbersList = new List<Int32>();
             // Считали простые числа с файла
             alg.loadSimpleNumber("prime_numbers.txt");
+            // Автопроверка тестами по умолчанию включена
+            autotest.Checked = true;
         }
 
         // кнопка ГЕНЕРИРОВАТЬ
