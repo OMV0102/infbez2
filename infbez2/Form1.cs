@@ -36,6 +36,7 @@ namespace infbez2
         {
             // Ждущий курсор и неактивное окно на время генерации
             this.txt_sequence.Text = "";
+            test_neutral_show();
             this.Cursor = Cursors.WaitCursor;
             this.Enabled = false;
 
@@ -84,7 +85,47 @@ namespace infbez2
         // функция: отобразить результаты тестов
         private void test_result_show()
         {
+            if(global.test1 == true)
+            {
+                label_test1_result.Text = "Успешно";
+                label_test1_result.ForeColor = Color.Green;
+            }
+            else
+            {
+                label_test1_result.Text = "Не пройден";
+                label_test1_result.ForeColor = Color.Red;
+            }
+            if (global.test2 == true)
+            {
+                label_test2_result.Text = "Успешно";
+                label_test2_result.ForeColor = Color.Green;
+            }
+            else
+            {
+                label_test2_result.Text = "Не пройден";
+                label_test2_result.ForeColor = Color.Red;
+            }
+            if (global.test3 == true)
+            {
+                label_test3_result.Text = "Успешно";
+                label_test3_result.ForeColor = Color.Green;
+            }
+            else
+            {
+                label_test3_result.Text = "Не пройден";
+                label_test3_result.ForeColor = Color.Red;
+            }
+        }
 
+        // функция: отображает нейтральные результаты
+        private void test_neutral_show()
+        {
+            label_test1_result.Text = "Нет результата";
+            label_test2_result.Text = "Нет результата";
+            label_test3_result.Text = "Нет результата";
+            label_test1_result.ForeColor = Color.Black;
+            label_test2_result.ForeColor = Color.Black;
+            label_test3_result.ForeColor = Color.Black;
         }
     }
 }
