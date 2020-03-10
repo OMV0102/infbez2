@@ -25,12 +25,27 @@ namespace infbez2
         // При загрузке формы
         private void Form1_Load(object sender, EventArgs e)
         {
-            // Выделили память под список простых чисел
-            global.simpleNumbersList = new List<Int32>();
-            // Считали простые числа с файла
-            alg.loadSimpleNumber("prime_numbers.txt");
-            // Автопроверка тестами по умолчанию включена
-            autotest.Checked = true;
+            if (File.Exists(global.filename) == false)
+            {
+                DialogResult res = MessageBox.Show("", "Отсутствует файл", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
+                if (res == DialogResult.OK)
+                {
+                    this.Close();
+                }
+                else
+                {
+                    this.Close();
+                }
+            }
+            else
+            {
+                // Выделили память под список простых чисел
+                global.simpleNumbersList = new List<Int32>();
+                // Считали простые числа с файла
+                alg.loadSimpleNumber(global.filename);
+                // Автопроверка тестами по умолчанию включена
+                autotest.Checked = true;
+            }
         }
 
         // кнопка ГЕНЕРИРОВАТЬ

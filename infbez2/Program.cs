@@ -55,9 +55,8 @@ namespace infbez2
         }
 
         // сохранение простых чисел в файл из списка
-        public static void saveSimpleNumber(String filename)
+        public static void saveSimpleNumber(String fullPath)
         {
-            String fullPath = Application.StartupPath + "\\" + filename;
             int N = global.simpleNumbersList.Count();
             StreamWriter sw = new StreamWriter(fullPath, false, Encoding.UTF8);
 
@@ -68,9 +67,8 @@ namespace infbez2
         }
 
         // загрузка уже найденных простых чисел из файла в список
-        public static void loadSimpleNumber(String filename)
+        public static void loadSimpleNumber(String fullPath)
         {
-            String fullPath = Application.StartupPath + "\\" + filename;
             if (File.Exists(fullPath) == true) // Если фай по пути существует
             {
                 // Создали поток для считывания
@@ -402,6 +400,7 @@ namespace infbez2
     static public class global
     {
         static public List<Int32> simpleNumbersList; // Список с простыми числами
+        static public String filename = Application.StartupPath + "\\" + "prime_numbers.txt";
         static public RNGCryptoServiceProvider rng; // объект класса генератора псевдослучайных чисел
         static public double a = 1.82138636; // допустимый уровень значимости в тесте
         static public String sequence = ""; // Сгенерированная последовательность бит
