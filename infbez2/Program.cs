@@ -27,53 +27,50 @@ namespace infbez2
 
     public static class alg // Основной класс с методами
     {
-        // Генерация простых чисел до n перебором
-        static public void generateSimpleNumbers(Int32 n)
-        {
-            Int32 simpleCount = 0;
-            bool flag;
-            Int32 start = 2;
-            if (global.simpleNumbersList.Count() > 1)
-                start = global.simpleNumbersList.Max() + 1;
-
-            // Заполнили список числами от 2 до корня из n
-            for (Int32 i = start; i < n; i++)
-            {
-                simpleCount = global.simpleNumbersList.Count;
-                flag = true;
-                for (int k = 0; flag == true && k < simpleCount; k++)
-                    if (i % global.simpleNumbersList[k] == 0)
-                    {
-                        flag = false;
-                    }
-
-                if (flag == true)
-                    global.simpleNumbersList.Add(i);
-            }
-        }
 
         // Генерация простых чисел до n решетом Эратосфена (заново)
-        static public void generatePrimeNumbersEratosthenes(Int32 n)
+        static public void generatePrimeNumbersEratosthenes(UInt32 n)
         {
             Int32 simpleCount = 0;
-            List<Int32> simpleNumbersList = new List<Int32>(); 
+            List<Int32> simpleBeginNums = new List<Int32>();
+            Int32 n_sqrt = (Int32)Math.Sqrt(n);
             bool flag;
-            Int32 start = 2;
 
             // Заполнили список числами от 2 до корня из n
-            for (Int32 i = start; i < n; i++)
+            for (Int32 i = 2; i < n_sqrt+1; i++)
             {
-                simpleCount = global.simpleNumbersList.Count;
                 flag = true;
+                simpleCount = simpleBeginNums.Count;
                 for (int k = 0; flag == true && k < simpleCount; k++)
-                    if (i % global.simpleNumbersList[k] == 0)
+                    if (i % simpleBeginNums[k] == 0)
                     {
                         flag = false;
                     }
 
                 if (flag == true)
-                    global.simpleNumbersList.Add(i);
+                {
+                    simpleBeginNums.Add(i);  // Добавили в список чисел до корня n
+                    global.simpleNumbersList.Add(i); // Добавили в основной список простых чисел
+                }
             }
+
+            simpleCount = simpleBeginNums.Count;
+            // Проверяем числа от корня n + 1 до n
+            for (Int32 i = n_sqrt+1; i < n + 1; i++)
+            {
+                flag = true;
+                for (int k = 0; flag == true && k < simpleCount; k++)
+                    if (i % simpleBeginNums[k] == 0)
+                    {
+                        flag = false;
+                    }
+
+                if (flag == true)
+                {
+                    global.simpleNumbersList.Add(i); // Добавили в основной список простых чисел
+                }
+            }
+
         }
 
         // сохранение простых чисел в файл из списка
@@ -431,8 +428,8 @@ namespace infbez2
     static public class global
     {
         static public List<Int32> simpleNumbersList; // Список с простыми числами
-        static public String fullpath = Application.StartupPath + "\\" + global.filename;
         static public String filename = "prime_numbers.txt";
+        static public String fullpath = Application.StartupPath + "\\" + global.filename;
         static public RNGCryptoServiceProvider rng; // объект класса генератора псевдослучайных чисел
         static public double a = 1.82138636; // допустимый уровень значимости в тесте
         static public String sequence = ""; // Сгенерированная последовательность бит

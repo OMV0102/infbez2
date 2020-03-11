@@ -30,16 +30,16 @@ namespace infbez2
 
             if (File.Exists(global.filename) == false)
             {
-                DialogResult res = MessageBox.Show("Отсутвует файл " + global.filename + " с простыми числами, необходимыми для работы приложения!\n\n[Ок] — Сгенерировать\t**Займет 30 минут**\n\n[Отмена] — Выйти из приложения.", "Отсутствует файл", MessageBoxButtons.OKCancel, MessageBoxIcon.Error, MessageBoxDefaultButton.Button2);
+                DialogResult res = MessageBox.Show("Отсутствует файл " + global.filename + " с простыми числами, необходимыми для работы приложения!\n\n[Ок] — Сгенерировать\t(Время ожидания: 1 - 2 мин.)\n\n[Отмена] — Выйти из приложения.", "Отсутствует файл", MessageBoxButtons.OKCancel, MessageBoxIcon.Error, MessageBoxDefaultButton.Button2);
                 if (res == DialogResult.OK)
                 {
-                    res = MessageBox.Show("Вы точно уверены, что хотите запустить генерацию простых чисел? (Длительность ~30 минут).\n\n[Да] — Сгенерировать\n\n[Нет] — Выйти из приложения.", "Подтверждение генерации простых чисел", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
+                    res = MessageBox.Show("Вы точно уверены, что хотите запустить генерацию простых чисел?\n\n[Да] — Сгенерировать\n\n[Нет] — Выйти из приложения.", "Подтверждение генерации простых чисел", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
                     if (res == DialogResult.Yes)
                     {
-                        alg.generatePrimeNumbersEratosthenes(10000000);
+                        alg.generatePrimeNumbersEratosthenes(100000000); // 100млн
                         alg.saveSimpleNumber(global.fullpath);
                         alg.loadSimpleNumber(global.fullpath);
-                        MessageBox.Show("Вспомогательный файл создан.\nПриложение для работы.", "Приложение готово для работы", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1);
+                        MessageBox.Show("Вспомогательный файл создан.\nПриложение готово для работы.", "Приложение готово для работы", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1);
                     }
                     else
                     {
