@@ -25,12 +25,26 @@ namespace infbez2
         // При загрузке формы
         private void Form1_Load(object sender, EventArgs e)
         {
+            // Выделили память под список простых чисел
+            global.simpleNumbersList = new List<Int32>();
+
             if (File.Exists(global.filename) == false)
             {
-                DialogResult res = MessageBox.Show("", "Отсутствует файл", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
+                DialogResult res = MessageBox.Show("Отсутвует файл " + global.filename + " с простыми числами, необходимыми для работы приложения!\n\n[Ок] — Сгенерировать\t**Займет 30 минут**\n\n[Отмена] — Выйти из приложения.", "Отсутствует файл", MessageBoxButtons.OKCancel, MessageBoxIcon.Error, MessageBoxDefaultButton.Button2);
                 if (res == DialogResult.OK)
                 {
-                    this.Close();
+                    res = MessageBox.Show("Вы точно уверены, что хотите запустить генерацию простых чисел? (Длительность ~30 минут).\n\n[Да] — Сгенерировать\n\n[Нет] — Выйти из приложения.", "Подтверждение генерации простых чисел", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
+                    if (res == DialogResult.Yes)
+                    {
+                        alg.generatePrimeNumbersEratosthenes(10000000);
+                        alg.saveSimpleNumber(global.fullpath);
+                        alg.loadSimpleNumber(global.fullpath);
+                        MessageBox.Show("Вспомогательный файл создан.\nПриложение для работы.", "Приложение готово для работы", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1);
+                    }
+                    else
+                    {
+                        this.Close();
+                    }
                 }
                 else
                 {
@@ -39,10 +53,8 @@ namespace infbez2
             }
             else
             {
-                // Выделили память под список простых чисел
-                global.simpleNumbersList = new List<Int32>();
                 // Считали простые числа с файла
-                alg.loadSimpleNumber(global.filename);
+                alg.loadSimpleNumber(global.fullpath);
                 // Автопроверка тестами по умолчанию включена
                 autotest.Checked = true;
             }
