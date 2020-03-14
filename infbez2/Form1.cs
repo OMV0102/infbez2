@@ -33,13 +33,18 @@ namespace infbez2
                 DialogResult res = MessageBox.Show("Отсутствует файл " + global.filename + " с простыми числами, необходимыми для работы приложения!\n\n[Ок] — Сгенерировать\t(Время ожидания: 1 - 2 мин.)\n\n[Отмена] — Выйти из приложения.", "Отсутствует файл", MessageBoxButtons.OKCancel, MessageBoxIcon.Error, MessageBoxDefaultButton.Button2);
                 if (res == DialogResult.OK)
                 {
-                    res = MessageBox.Show("Вы точно уверены, что хотите запустить генерацию простых чисел?\n\n[Да] — Сгенерировать\n\n[Нет] — Выйти из приложения.", "Подтверждение генерации простых чисел", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
+                    res = MessageBox.Show("Генерация нужно только при первом запуске приложения.\nВы точно уверены, что хотите запустить генерацию простых чисел?\n\n[Да] — Сгенерировать\n\n[Нет] — Выйти из приложения.", "Подтверждение генерации простых чисел", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
                     if (res == DialogResult.Yes)
                     {
+                        DateTime start = DateTime.Now; // старт замера времени
+                        
                         alg.generatePrimeNumbersEratosthenes(100000000); // 100млн
                         alg.saveSimpleNumber(global.fullpath);
                         alg.loadSimpleNumber(global.fullpath);
-                        MessageBox.Show("Вспомогательный файл создан.\nПриложение готово для работы.", "Приложение готово для работы", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1);
+
+                        DateTime end = DateTime.Now; // конец замера времени
+                        TimeSpan tm = end - start; // вычисляем разницу
+                        MessageBox.Show("Вспомогательный файл создан.\nПриложение готово для работы.\nВремени прошло: " + tm.Minutes + "м. " + tm.Seconds + "сек.", "Приложение готово для работы", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1);
                     }
                     else
                     {
@@ -55,9 +60,11 @@ namespace infbez2
             {
                 // Считали простые числа с файла
                 alg.loadSimpleNumber(global.fullpath);
-                // Автопроверка тестами по умолчанию включена
-                autotest.Checked = true;
+                
             }
+            // Автопроверка тестами по умолчанию включена
+            autotest.Checked = true;
+            btn_test.Enabled = false;
         }
 
         // кнопка ГЕНЕРИРОВАТЬ
