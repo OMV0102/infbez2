@@ -214,8 +214,6 @@
             // autotest
             // 
             this.autotest.AutoSize = true;
-            this.autotest.Checked = true;
-            this.autotest.CheckState = System.Windows.Forms.CheckState.Checked;
             this.autotest.Cursor = System.Windows.Forms.Cursors.Hand;
             this.autotest.FlatAppearance.BorderSize = 2;
             this.autotest.FlatStyle = System.Windows.Forms.FlatStyle.System;

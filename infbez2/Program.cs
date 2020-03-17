@@ -367,7 +367,7 @@ namespace infbez2
                 global.rng.GetBytes(b); // Сгенерировали случайны байты
                 BitArray bits = new BitArray(b); // Байты в биты
                 result = alg.binToDec(bits); // Из битов в число 
-                result = result % (max - min) + min; // Сделади число в нужном промежутке
+                result = result % (max - min) + min; // Сделали число в нужном промежутке
                 
             }
             return result;
@@ -421,6 +421,44 @@ namespace infbez2
                 if (global.simpleNumbersList[start] > num) return start;
                 else start++;
             return -1;
+        }
+
+        // поиск периода
+        public static int period(String seq_str)  // АААААААААААААААААААААААААААААААААААААААААААААААА
+        {
+            int T;
+            string T_str = "";
+            Int32 N = seq_str.Length;
+            char[] seq_arr = new char[N];
+            seq_arr = seq_str.ToCharArray();
+            Array.Reverse(seq_arr);
+            seq_str = new string(seq_arr);
+            
+            int head = 0;
+            int p1;
+            int p2;
+
+            //if (head == NULL)
+                //return (NULL);
+            p1 = head;
+            p2 = head;
+            while (p2 +1 != N && p2 +2 != N)
+            {
+                p1 = p1+1;
+                p2 = p2 + 2;
+                if (seq_str[p1] == seq_str[p2])
+                {
+                    p1 = head;
+                    while (seq_str[p1] != seq_str[p2])
+                    {
+                        p1 = p1 +  1;
+                        p2 = p2 + 1;
+                    }
+                    return p2+1;
+                }
+            }
+            return 0;
+
         }
     }
 

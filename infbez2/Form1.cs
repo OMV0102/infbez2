@@ -63,8 +63,8 @@ namespace infbez2
                 
             }
             // Автопроверка тестами по умолчанию включена
-            autotest.Checked = true;
-            btn_test.Enabled = false;
+            //autotest.Checked = true;
+            //btn_test.Enabled = false;
         }
 
         // кнопка ГЕНЕРИРОВАТЬ
@@ -108,14 +108,16 @@ namespace infbez2
         // кнопка ПРОВЕРИТЬ ТЕСТАМИ
         private void btn_test_Click(object sender, EventArgs e)
         {
+            global.sequence = "1010111111";  // АААААААААААААААААААААААААААААААААААААААААААААААА
+            alg.period(global.sequence);      // АААААААААААААААААААААААААААААААААААААААААААААААА
             // Если последовательность не пустая и длина не меньше минимальной
-            if (global.sequence.Length >= txt_seqLength.Minimum)
+            /*if (global.sequence.Length >= txt_seqLength.Minimum)
             {
                 global.test1 = alg.test1_frequency(global.sequence);
                 global.test2 = alg.test2_SameBits(global.sequence);
                 global.test3 = alg.test3_arbitrary_deviations(global.sequence);
                 test_result_show(); // показать результаты тестов
-            }
+            }*/
         }
 
         // Копировать последовательность в буфер обмена
