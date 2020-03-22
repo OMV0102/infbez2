@@ -41,6 +41,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.autotest = new System.Windows.Forms.CheckBox();
+            this.btn_period = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.txt_seqLength)).BeginInit();
             this.SuspendLayout();
             // 
@@ -65,7 +66,7 @@
             this.txt_seqLength.Cursor = System.Windows.Forms.Cursors.Hand;
             this.txt_seqLength.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.txt_seqLength.Increment = new decimal(new int[] {
-            10,
+            16,
             0,
             0,
             0});
@@ -76,7 +77,7 @@
             0,
             0});
             this.txt_seqLength.Minimum = new decimal(new int[] {
-            10,
+            16,
             0,
             0,
             0});
@@ -87,7 +88,7 @@
             this.txt_seqLength.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.txt_seqLength.ThousandsSeparator = true;
             this.txt_seqLength.Value = new decimal(new int[] {
-            100,
+            64,
             0,
             0,
             0});
@@ -226,6 +227,22 @@
             this.autotest.UseVisualStyleBackColor = true;
             this.autotest.CheckedChanged += new System.EventHandler(this.autotest_CheckedChanged);
             // 
+            // btn_period
+            // 
+            this.btn_period.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.btn_period.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btn_period.FlatAppearance.BorderSize = 2;
+            this.btn_period.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_period.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btn_period.Location = new System.Drawing.Point(34, 279);
+            this.btn_period.Name = "btn_period";
+            this.btn_period.Size = new System.Drawing.Size(100, 45);
+            this.btn_period.TabIndex = 14;
+            this.btn_period.TabStop = false;
+            this.btn_period.Text = "Период";
+            this.btn_period.UseVisualStyleBackColor = false;
+            this.btn_period.Click += new System.EventHandler(this.btn_period_Click);
+            // 
             // Form1
             // 
             this.AcceptButton = this.btn_generate;
@@ -233,6 +250,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveBorder;
             this.ClientSize = new System.Drawing.Size(642, 469);
+            this.Controls.Add(this.btn_period);
             this.Controls.Add(this.autotest);
             this.Controls.Add(this.txt_sequence);
             this.Controls.Add(this.label4);
@@ -275,6 +293,7 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.CheckBox autotest;
+        private System.Windows.Forms.Button btn_period;
     }
 }
 
