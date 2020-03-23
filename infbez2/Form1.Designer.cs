@@ -42,6 +42,7 @@
             this.label4 = new System.Windows.Forms.Label();
             this.autotest = new System.Windows.Forms.CheckBox();
             this.btn_period = new System.Windows.Forms.Button();
+            this.txt_period = new System.Windows.Forms.RichTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.txt_seqLength)).BeginInit();
             this.SuspendLayout();
             // 
@@ -99,7 +100,6 @@
             this.txt_sequence.Font = new System.Drawing.Font("Consolas", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.txt_sequence.Location = new System.Drawing.Point(12, 93);
             this.txt_sequence.Name = "txt_sequence";
-            this.txt_sequence.ReadOnly = true;
             this.txt_sequence.Size = new System.Drawing.Size(616, 122);
             this.txt_sequence.TabIndex = 3;
             this.txt_sequence.TabStop = false;
@@ -141,7 +141,7 @@
             this.label_test1_result.AutoSize = true;
             this.label_test1_result.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label_test1_result.ForeColor = System.Drawing.Color.Black;
-            this.label_test1_result.Location = new System.Drawing.Point(401, 300);
+            this.label_test1_result.Location = new System.Drawing.Point(302, 293);
             this.label_test1_result.Name = "label_test1_result";
             this.label_test1_result.Size = new System.Drawing.Size(151, 24);
             this.label_test1_result.TabIndex = 6;
@@ -152,7 +152,7 @@
             this.label_test2_result.AutoSize = true;
             this.label_test2_result.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label_test2_result.ForeColor = System.Drawing.Color.Black;
-            this.label_test2_result.Location = new System.Drawing.Point(401, 357);
+            this.label_test2_result.Location = new System.Drawing.Point(302, 350);
             this.label_test2_result.Name = "label_test2_result";
             this.label_test2_result.Size = new System.Drawing.Size(151, 24);
             this.label_test2_result.TabIndex = 7;
@@ -163,7 +163,7 @@
             this.label_test3_result.AutoSize = true;
             this.label_test3_result.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label_test3_result.ForeColor = System.Drawing.Color.Black;
-            this.label_test3_result.Location = new System.Drawing.Point(401, 418);
+            this.label_test3_result.Location = new System.Drawing.Point(302, 411);
             this.label_test3_result.Name = "label_test3_result";
             this.label_test3_result.Size = new System.Drawing.Size(151, 24);
             this.label_test3_result.TabIndex = 8;
@@ -184,7 +184,7 @@
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label2.ForeColor = System.Drawing.Color.Black;
             this.label2.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.label2.Location = new System.Drawing.Point(191, 298);
+            this.label2.Location = new System.Drawing.Point(127, 291);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(161, 28);
             this.label2.TabIndex = 10;
@@ -195,7 +195,7 @@
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label3.ForeColor = System.Drawing.Color.Black;
             this.label3.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.label3.Location = new System.Drawing.Point(73, 340);
+            this.label3.Location = new System.Drawing.Point(9, 333);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(279, 54);
             this.label3.TabIndex = 11;
@@ -206,7 +206,7 @@
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label4.ForeColor = System.Drawing.Color.Black;
             this.label4.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.label4.Location = new System.Drawing.Point(73, 409);
+            this.label4.Location = new System.Drawing.Point(9, 402);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(279, 58);
             this.label4.TabIndex = 12;
@@ -219,7 +219,7 @@
             this.autotest.FlatAppearance.BorderSize = 2;
             this.autotest.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.autotest.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.autotest.Location = new System.Drawing.Point(265, 229);
+            this.autotest.Location = new System.Drawing.Point(265, 231);
             this.autotest.Name = "autotest";
             this.autotest.Size = new System.Drawing.Size(245, 29);
             this.autotest.TabIndex = 13;
@@ -234,14 +234,29 @@
             this.btn_period.FlatAppearance.BorderSize = 2;
             this.btn_period.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btn_period.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btn_period.Location = new System.Drawing.Point(34, 279);
+            this.btn_period.Location = new System.Drawing.Point(514, 321);
             this.btn_period.Name = "btn_period";
-            this.btn_period.Size = new System.Drawing.Size(100, 45);
+            this.btn_period.Size = new System.Drawing.Size(120, 40);
             this.btn_period.TabIndex = 14;
             this.btn_period.TabStop = false;
             this.btn_period.Text = "Период";
+            this.btn_period.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.btn_period.UseVisualStyleBackColor = false;
             this.btn_period.Click += new System.EventHandler(this.btn_period_Click);
+            // 
+            // txt_period
+            // 
+            this.txt_period.DetectUrls = false;
+            this.txt_period.Font = new System.Drawing.Font("Consolas", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.txt_period.Location = new System.Drawing.Point(514, 367);
+            this.txt_period.MaxLength = 10;
+            this.txt_period.Name = "txt_period";
+            this.txt_period.ReadOnly = true;
+            this.txt_period.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
+            this.txt_period.Size = new System.Drawing.Size(116, 29);
+            this.txt_period.TabIndex = 15;
+            this.txt_period.TabStop = false;
+            this.txt_period.Text = "";
             // 
             // Form1
             // 
@@ -250,6 +265,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveBorder;
             this.ClientSize = new System.Drawing.Size(642, 469);
+            this.Controls.Add(this.txt_period);
             this.Controls.Add(this.btn_period);
             this.Controls.Add(this.autotest);
             this.Controls.Add(this.txt_sequence);
@@ -266,6 +282,7 @@
             this.Controls.Add(this.label1);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.KeyPreview = true;
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.MaximizeBox = false;
             this.Name = "Form1";
@@ -294,6 +311,7 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.CheckBox autotest;
         private System.Windows.Forms.Button btn_period;
+        private System.Windows.Forms.RichTextBox txt_period;
     }
 }
 

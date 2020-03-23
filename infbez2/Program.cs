@@ -423,6 +423,7 @@ namespace infbez2
             return -1;
         }
 
+        // Перворачивает строку (запись строки наоборот)
         public static string stringReverse(String str_in)
         {
             char[] str_arr = str_in.ToCharArray();
@@ -431,8 +432,30 @@ namespace infbez2
 
             return str_out;
         }
+
+        // Поиск длины периода в последовательности
+        public static int findPeriod(string sequence)
+        {
+            int begin = 0, periodLength = 1;
+
+            do
+            {
+                if (sequence[begin] == sequence[periodLength + begin])
+                {
+                    begin += 1;
+                }
+                else
+                {
+                    begin = 0;
+                    periodLength += 1;
+                }
+            } while (begin + periodLength != sequence.Length);
+
+            return periodLength;
+        }
     }
 
+    // Класс с основными переменными
     static public class global
     {
         static public List<Int32> simpleNumbersList; // Список с простыми числами
@@ -448,276 +471,5 @@ namespace infbez2
         static public double test1_S; // Значение статистики S в 1 тесте
         static public double test2_S; // Значение статистики S в 2 тесте
         static public double test3_S; // Значение статистики S в 3 тесте
-    }
-
-    public class Node // Узел списка
-    {
-        private int data;
-
-        private int index;
-
-        private Node next;
-
-        private Node prev;
-
-        public Node(int data)
-        {
-            this.data = data;
-        }
-
-        public int getData()
-        {
-            return data;
-        } 
-
-        public void setData(int data_new)
-        {
-            this.data = data_new;
-        }
-
-        public Node getNext()
-        {
-            return next;
-        }
-
-        public void setNext(Node next_new)
-        {
-            this.next = next_new;
-        }
-
-        public Node getPrev()
-        {
-            return prev;
-        }
-
-        public void setPrev(Node prev_new)
-        {
-            this.prev = prev_new;
-        }
-
-        public Node getRoot()
-        {
-            Node n = this;
-            while (n.getPrev() != null)
-            {
-                n = n.getPrev();
-            }
-            return n;
-        }
-
-        public Node getLast()
-        {
-            Node n = this;
-            while (n.getNext() != null)
-            {
-                n = n.getNext();
-            }
-            return n;
-        }
-
-        public int getIndex()
-        {
-            return index;
-        }
-
-        public void setIndex(int index_new)
-        {
-            this.index = index_new;
-        }
-    }
-
-
-
-    public class floyd
-    {
-        public static void main()
-        {
-            Node root = generateList(global.sequence);
-
-            int otvet;
-            otvet = periodFloyd(root);
-
-            otvet = periodFloydString(global.sequence);
-
-            otvet = getPeriodLength(global.sequence);
-
-            otvet = Period(global.sequence);
-
-        }
-
-        private static Node generateList(String seq)
-        {
-            Node n = new Node(Int32.Parse(seq[0].ToString()));
-            n.setIndex(0);
-            int N = seq.Length;
-            Node temp;
-
-            // Заполнение списка
-            for(int i = 1; i < N; i++)
-            {
-                temp = new Node(Int32.Parse(seq[i].ToString()));
-                temp.setIndex(i);
-                temp.setPrev(n);
-                n.setNext(temp);
-                n = n.getNext();
-            }
-
-            //n.setNext(n.getRoot());
-            n = n.getRoot();
-
-            return n;
-        }
-
-        private static int periodFloyd(Node root)
-        {
-            if (root == null || root.getNext() == null || root.getNext().getNext() == null)
-                return -1;
-
-            Node tortoise = root;
-            Node hare = root;
-
-            // Основная часть алгоритма: находим повторение x_i = x_2i.
-            // Заяц движется вдвое быстрее черепахи,
-            // и расстояние между ними увеличивается на единицу от шага к шагу.
-            // Однажды они окажутся внутри цикла, и тогда расстояние между ними
-            // будет делиться на λ.
-            tortoise = root.getNext(); // f(x0) является элементом, следующим за x0.
-            hare = root.getNext().getNext();
-            //while (tortoise != hare)
-            while (tortoise.getData() != hare.getData())
-            {
-                tortoise = tortoise.getNext();
-                hare = hare.getNext().getNext();
-            }
-
-            // В этот момент позиция черепахи ν, 
-            // которая равна расстоянию между черепахой и зайцем,
-            // делится на период λ. Таким образом, заяц, двигаясь 
-            // по кольцу на одну позицию за один раз, 
-            // и черепаха, опять начавшая движение со стартовой точки x0 и
-            // приближающаяся к кольцу, встретятся в начале кольца
-            // Находим позицию μ встречи.  
-            int beginT = 0;
-            tortoise = root;
-
-            //while (tortoise != hare)
-            while (tortoise.getData() != hare.getData() && hare.getNext() != null && tortoise.getNext() != null)
-            {
-                tortoise = tortoise.getNext();
-                hare = hare.getNext();   // Заяц и черепаха двигаются с одинаковой скоростью
-                beginT += 1;
-            }
-
-            // Находим длину кратчайшего цикла, начинающегося с позиции x_μ
-            // Заяц движется на одну позицию вперёд, 
-            // в то время как черепаха стоит на месте.
-
-            int lenT = 1;
-            hare = tortoise.getNext();
-            //while (tortoise != hare)
-            while (tortoise.getData() != hare.getData() && hare.getNext() != null && tortoise.getNext() != null)
-            {
-                hare = hare.getNext();
-                lenT += 1;
-            }
-
-
-            return lenT;
-        }
-
-        private static int periodFloydString(String seq)
-        {
-            int tortoise = 0;
-            int hare = 0;
-
-
-            // Основная часть алгоритма: находим повторение x_i = x_2i.
-            // Заяц движется вдвое быстрее черепахи,
-            // и расстояние между ними увеличивается на единицу от шага к шагу.
-            // Однажды они окажутся внутри цикла, и тогда расстояние между ними
-            // будет делиться на λ.
-            tortoise += 1;
-            hare += 2;
-            while (hare != seq.Length && tortoise != seq.Length && seq[tortoise] != seq[hare])
-            {
-                tortoise += 1;
-                hare += 2;
-            }
-
-            // В этот момент позиция черепахи ν, 
-            // которая равна расстоянию между черепахой и зайцем,
-            // делится на период λ. Таким образом, заяц, двигаясь 
-            // по кольцу на одну позицию за один раз, 
-            // и черепаха, опять начавшая движение со стартовой точки x0 и
-            // приближающаяся к кольцу, встретятся в начале кольца
-            // Находим позицию μ встречи. 
-            
-            int beginT = 0;
-            tortoise = 0;
-
-            while (hare != seq.Length && tortoise != seq.Length && seq[tortoise] != seq[hare])
-            {
-                tortoise += 1;
-                hare += 1;   // Заяц и черепаха двигаются с одинаковой скоростью
-                beginT += 1;
-            }
-
-            // Находим длину кратчайшего цикла, начинающегося с позиции x_μ
-            // Заяц движется на одну позицию вперёд, 
-            // в то время как черепаха стоит на месте.
-
-            int lenT = 1;
-            hare += 1;
-            while (hare+1 != seq.Length && tortoise+1 != seq.Length && seq[tortoise] != seq[hare])
-            {
-                hare += 1;
-                lenT += 1;
-            }
-
-
-            return lenT;
-        }
-
-        private static int getPeriodLength(String seq)
-        {
-            int lenT = 1;
-            string period = "";
-
-            period += seq[0];
-            for (int i = 1; i < seq.Length; i++) // поиск периода
-            {
-                string tmp = "";
-
-                for (int j = 0; j + i < seq.Length && j < lenT; j++)
-                    tmp += seq[i + j];
-
-                if (period == tmp)
-                    return lenT;
-
-                lenT++;
-                period += seq[i];
-            }
-
-            return lenT;
-        }
-
-        public static int Period(string seq) //Вычисление периода
-        {
-            int lenT = 1;
-            int step = 0;
-            while (step + lenT != seq.Length)
-            {
-                if (seq[step] != seq[lenT + step])
-                {
-                    ++lenT;
-                    step = 0;
-                }
-                else
-                {
-                    ++step;
-                }
-            }
-            return lenT;
-        }
     }
 }

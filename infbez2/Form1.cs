@@ -33,7 +33,7 @@ namespace infbez2
                 DialogResult res = MessageBox.Show("Отсутствует файл " + global.filename + " с простыми числами, необходимыми для работы приложения!\n\n[Ок] — Сгенерировать\t(Время ожидания: 1 - 2 мин.)\n\n[Отмена] — Выйти из приложения.", "Отсутствует файл", MessageBoxButtons.OKCancel, MessageBoxIcon.Error, MessageBoxDefaultButton.Button2);
                 if (res == DialogResult.OK)
                 {
-                    res = MessageBox.Show("Генерация нужно только при первом запуске приложения.\nВы точно уверены, что хотите запустить генерацию простых чисел?\n\n[Да] — Сгенерировать\n\n[Нет] — Выйти из приложения.", "Подтверждение генерации простых чисел", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
+                    res = MessageBox.Show("Генерация нужна только при первом запуске приложения.\nВы точно уверены, что хотите запустить генерацию простых чисел?\n\n[Да] — Сгенерировать\t(Время ожидания: 1 - 2 мин.)\n\n[Нет] — Выйти из приложения.", "Подтверждение генерации простых чисел", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
                     if (res == DialogResult.Yes)
                     {
                         DateTime start = DateTime.Now; // старт замера времени
@@ -72,6 +72,7 @@ namespace infbez2
         {
             // Ждущий курсор и неактивное окно на время генерации
             this.txt_sequence.Text = "";
+            this.txt_period.Text = "";
             test_neutral_show();
             this.Cursor = Cursors.WaitCursor;
             this.Enabled = false;
@@ -121,10 +122,29 @@ namespace infbez2
         // кнопка ПЕРИОД
         private void btn_period_Click(object sender, EventArgs e)
         {
-            //global.sequence = "206631631631631";
-            global.sequence = "1110011101101010";
-            //global.sequence = alg.stringReverse(global.sequence);
-            floyd.main();      // АААААААААААААААААААААААААААААААААААААААААААААААА
+            if (txt_sequence.Text.Length >= txt_seqLength.Minimum)
+            {
+                String seq = "";
+                int periodLength = 1;
+
+                seq = txt_sequence.Text;
+                periodLength = alg.findPeriod(seq); // запуск функции поиска периода
+                // если найденная длина периода равна длине последовательности или равна 1 то периода нет
+                if(periodLength == 1 || periodLength == seq.Length)
+                {
+                    txt_period.Text = "Нет";
+                }
+                else // иначе выводим длину периода
+                {
+                    txt_period.Text = periodLength.ToString();
+                }
+            }
+            else
+            {
+                this.Enabled = false;
+                MessageBox.Show("Длина последовательности в текстовом поле не может быть меньше минимальной длины (" + txt_seqLength.Minimum.ToString() + ")!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
+                this.Enabled = true;
+            }
         }
 
         // Копировать последовательность в буфер обмена
