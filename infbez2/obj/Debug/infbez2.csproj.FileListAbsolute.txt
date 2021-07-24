@@ -7,3 +7,12 @@ K:\REPOS10\infbez2\infbez2\obj\Debug\infbez2.csproj.GenerateResource.cache
 K:\REPOS10\infbez2\infbez2\obj\Debug\RSA.exe
 K:\REPOS10\infbez2\infbez2\obj\Debug\RSA.pdb
 K:\REPOS10\infbez2\infbez2\obj\Debug\infbez2.csprojAssemblyReference.cache
+M:\Repository\infbez2\infbez2\obj\Debug\infbez2.Form1.resources
+M:\Repository\infbez2\infbez2\obj\Debug\infbez2.Properties.Resources.resources
+M:\Repository\infbez2\infbez2\obj\Debug\infbez2.csproj.GenerateResource.cache
+M:\Repository\infbez2\infbez2\obj\Debug\infbez2.csproj.CoreCompileInputs.cache
+M:\Repository\infbez2\infbez2\obj\Debug\RSA.exe
+M:\Repository\infbez2\infbez2\obj\Debug\RSA.pdb
+M:\Repository\infbez2\infbez2\bin\Debug\RSA.exe.config
+M:\Repository\infbez2\infbez2\bin\Debug\RSA.exe
+M:\Repository\infbez2\infbez2\bin\Debug\RSA.pdb

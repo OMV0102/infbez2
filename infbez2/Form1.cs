@@ -82,6 +82,9 @@ namespace infbez2
             if (autotest.Checked == true)
             {
                 btn_test_Click(null, null);
+                btn_period_Click(null, null);
+                //btn_test.PerformClick();
+                //btn_period.PerformClick();
             }
 
             // Обычный курсор
